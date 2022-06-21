@@ -1,0 +1,3 @@
+com\unilever\startup\ServletInitializer.class
+com\unilever\startup\StartApplication.class
+com\unilever\startup\JpaAuditingConfiguration.class

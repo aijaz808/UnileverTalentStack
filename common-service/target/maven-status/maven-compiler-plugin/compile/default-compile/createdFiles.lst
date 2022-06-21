@@ -1,0 +1,16 @@
+com\unilever\commonservice\profile\constants\converter\RoleTypeSerializer.class
+com\unilever\commonservice\profile\dto\ProfileDto.class
+com\unilever\commonservice\profile\model\Role.class
+com\unilever\commonservice\profile\mapper\CommonMapperImpl.class
+com\unilever\commonservice\profile\repository\RoleRepository.class
+com\unilever\commonservice\profile\constants\converter\RoleTypeConverter.class
+com\unilever\commonservice\profile\constants\RoleType.class
+com\unilever\commonservice\profile\controllers\TalentStackController.class
+com\unilever\commonservice\profile\CommonServiceApplication.class
+com\unilever\commonservice\profile\DataSourceConfig.class
+com\unilever\commonservice\profile\service\TalentStackService.class
+com\unilever\commonservice\profile\service\ProfileService.class
+com\unilever\commonservice\profile\repository\ProfileRepository.class
+com\unilever\commonservice\profile\mapper\CommonMapper.class
+com\unilever\commonservice\profile\model\Profile.class
+com\unilever\commonservice\profile\dto\RoleDto.class

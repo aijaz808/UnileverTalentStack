@@ -1,0 +1,30 @@
+changeSet:
+  id:  insert-codes
+  author:  Amna Ijaz
+  changes:
+    -  insert:
+         columns:
+           -  column:
+                name:  USER_NAME
+                value: maryam adhami
+           - column:
+               name:  PASSWORD
+               value:
+           - column:
+               name: ROLE
+               value: 20191
+           - column:
+               name: CREATED_BY
+               value: Amna Ijaz
+           - column:
+               name: MODIFIED_BY
+               value: Amna Ijaz
+           - column:
+               name: LOCK_VERSION
+               value: 1
+           - column:
+               name: ACTIVE_IND
+               value: 1
+         dbms:  'mysql'
+         schemaName:  unilever
+         tableName:  COMMON_PROFILE

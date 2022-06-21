@@ -1,0 +1,15 @@
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\dto\ProfileDto.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\service\ProfileService.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\mapper\CommonMapper.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\dto\RoleDto.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\model\Role.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\service\TalentStackService.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\constants\converter\RoleTypeConverter.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\repository\RoleRepository.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\constants\RoleType.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\DataSourceConfig.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\repository\ProfileRepository.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\constants\converter\RoleTypeSerializer.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\CommonServiceApplication.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\controllers\TalentStackController.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\model\Profile.java

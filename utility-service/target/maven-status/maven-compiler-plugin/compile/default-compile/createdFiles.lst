@@ -1,0 +1,16 @@
+com\unilever\utilityservice\exception\UnauthorizedException.class
+com\unilever\utilityservice\model\AbstractEntity.class
+com\unilever\utilityservice\dto\BaseDto.class
+com\unilever\utilityservice\dto\DefaultLabelValue.class
+com\unilever\utilityservice\exception\EntityAlreadyExistException.class
+com\unilever\utilityservice\response\ResponseData.class
+com\unilever\utilityservice\util\CypherUtil.class
+com\unilever\utilityservice\exception\IncorrectArgumentException.class
+com\unilever\utilityservice\UtilityServiceApplication.class
+com\unilever\utilityservice\constant\AppCode.class
+com\unilever\utilityservice\mapper\BaseMapperImpl.class
+com\unilever\utilityservice\util\StringUtil.class
+com\unilever\utilityservice\mapper\BaseMapper.class
+com\unilever\utilityservice\common\Assert.class
+com\unilever\utilityservice\response\ResponseHandler.class
+com\unilever\utilityservice\exception\EntityNotFoundException.class
