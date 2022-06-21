@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: changeset_create_refresh_token
+      author: Amna Ijaz
+      changes:
+        - createTable:
+            tableName: REFRESH_TOKEN
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: COMMON_PROFILE_ID
+                  type: numeric(18,0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: TOKEN
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: EXPIRY_DATE
+                  type: Datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATE_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LOCK_VERSION
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ACTIVE_IND
+                  type: tinyint
+                  constraints:
+                    nullable: false

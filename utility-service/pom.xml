@@ -9,15 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-
-
-    <artifactId>auth-service</artifactId>
+    <groupId>com.unilever</groupId>
+    <artifactId>utility-service</artifactId>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>
-            <groupId>com.unilever</groupId>
-            <artifactId>common-service</artifactId>
-            <version>1.0</version>
+            <groupId>org.antlr</groupId>
+            <artifactId>stringtemplate</artifactId>
+            <version>4.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -31,6 +31,7 @@
             </plugin>
         </plugins>
     </build>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

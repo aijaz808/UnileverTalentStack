@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: changeset_create_code
+      author: Amna Ijaz
+      changes:
+        - createTable:
+            tableName: CODE
+            columns:
+              - column:
+                  name: CODE_ID
+                  type: BIGINT
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: CODE_TYPE_ID
+                  type: numeric(18,0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CODE_VALUE
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DESCRIPTION
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATE_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LOCK_VERSION
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ACTIVE_IND
+                  type: tinyint
+                  constraints:
+                    nullable: false
