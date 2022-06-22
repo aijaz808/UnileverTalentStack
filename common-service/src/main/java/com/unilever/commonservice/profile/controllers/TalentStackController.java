@@ -43,4 +43,6 @@ public class TalentStackController {
     public ResponseEntity<?> getCandidateInformation(@PathVariable Long candidateId) throws Exception{
         return ResponseHandler.buildResponseData(talentStackService.getCandidateInformation(candidateId), HttpStatus.OK);
     }
+
+
 }
