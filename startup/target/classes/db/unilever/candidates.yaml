@@ -21,58 +21,36 @@ databaseChangeLog:
               - column:
                   name: CURRENT_EMPLOYER
                   type: varchar(500)
-                  constraints:
-                    nullable: false
               - column:
                   name: CURRENT_DESIGNATION
-                  type: Datetime
-                  constraints:
-                    nullable: false
+                  type: varchar(500)
               - column:
                   name: ROLE_ID
                   type: numeric(18,0)
-                  constraints:
-                    nullable: false
               - column:
                   name: PROFILE_URL
                   type: VARCHAR(500)
-                  constraints:
-                    nullable: false
               - column:
                   name: EXPERIENCE
                   type: numeric(18,0)
-                  constraints:
-                    nullable: false
               - column:
                   name: IS_UNILEVER_BEFORE
                   type: BIT
-                  constraints:
-                    nullable: false
               - column:
                   name: GENDER_ID
                   type: numeric(18,0)
-                  constraints:
-                    nullable: false
               - column:
                   name: IS_SOURCED_BY_HEAD_HUNTER
                   type: BIT
-                  constraints:
-                    nullable: false
               - column:
                   name: COMMENTS
                   type: VARCHAR(500)
-                  constraints:
-                    nullable: false
               - column:
                   name: HIRING_STATUS_ID
                   type: numeric(18,0)
-                  constraints:
-                    nullable: false
               - column:
                   name: HAS_INTERVIEWED
                   type: BIT
-                  constraints:
-                    nullable: false
               - column:
                   name: CREATED_BY
                   type: VARCHAR(50)

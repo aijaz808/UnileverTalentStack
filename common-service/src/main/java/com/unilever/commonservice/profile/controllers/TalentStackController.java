@@ -1,5 +1,6 @@
 package com.unilever.commonservice.profile.controllers;
 
+import com.unilever.commonservice.profile.dto.CandidateDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
 import com.unilever.commonservice.profile.service.TalentStackService;
 import com.unilever.utilityservice.response.ResponseHandler;
@@ -26,5 +27,20 @@ public class TalentStackController {
     @GetMapping("/getRoles")
     public ResponseEntity<?> getRoles() throws Exception{
         return ResponseHandler.buildResponseData(talentStackService.getRoles(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getTalentStackDropdowns")
+    public ResponseEntity<?> getTalentStackDropdowns() throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.getTalentStackDropdowns(), HttpStatus.OK);
+    }
+
+    @PostMapping("/saveCandidateInformation")
+    public ResponseEntity<?> saveCandidateInformation(@RequestBody CandidateDto candidateDto) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.saveCandidateInformation(candidateDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/getCandidateInformation/{candidateId}")
+    public ResponseEntity<?> getCandidateInformation(@PathVariable Long candidateId) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.getCandidateInformation(candidateId), HttpStatus.OK);
     }
 }

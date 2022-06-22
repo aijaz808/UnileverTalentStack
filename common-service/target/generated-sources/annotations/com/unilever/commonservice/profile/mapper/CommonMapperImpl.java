@@ -1,7 +1,9 @@
 package com.unilever.commonservice.profile.mapper;
 
+import com.unilever.commonservice.profile.dto.CandidateDto;
 import com.unilever.commonservice.profile.dto.ProfileDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
+import com.unilever.commonservice.profile.model.Candidate;
 import com.unilever.commonservice.profile.model.Profile;
 import com.unilever.commonservice.profile.model.Role;
 import javax.annotation.processing.Generated;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-22T00:58:14+0500",
+    date = "2022-06-23T00:40:35+0500",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -113,5 +115,99 @@ public class CommonMapperImpl implements CommonMapper {
         roleDto.setLineManager( role.getLineManager() );
 
         return roleDto;
+    }
+
+    @Override
+    public Candidate convert(CandidateDto candidateDto, Candidate candidate) {
+        if ( candidateDto == null ) {
+            return null;
+        }
+
+        if ( candidateDto.getId() != null ) {
+            candidate.setId( candidateDto.getId() );
+        }
+        if ( candidateDto.getCreatedDate() != null ) {
+            candidate.setCreatedDate( candidateDto.getCreatedDate() );
+        }
+        if ( candidateDto.getCreatedBy() != null ) {
+            candidate.setCreatedBy( candidateDto.getCreatedBy() );
+        }
+        if ( candidateDto.getModifiedDate() != null ) {
+            candidate.setModifiedDate( candidateDto.getModifiedDate() );
+        }
+        if ( candidateDto.getModifiedBy() != null ) {
+            candidate.setModifiedBy( candidateDto.getModifiedBy() );
+        }
+        if ( candidateDto.getActive() != null ) {
+            candidate.setActive( candidateDto.getActive() );
+        }
+        if ( candidateDto.getCandidateName() != null ) {
+            candidate.setCandidateName( candidateDto.getCandidateName() );
+        }
+        if ( candidateDto.getEmployerName() != null ) {
+            candidate.setEmployerName( candidateDto.getEmployerName() );
+        }
+        if ( candidateDto.getCurrentDesignation() != null ) {
+            candidate.setCurrentDesignation( candidateDto.getCurrentDesignation() );
+        }
+        if ( candidateDto.getRoleId() != null ) {
+            candidate.setRoleId( candidateDto.getRoleId() );
+        }
+        if ( candidateDto.getProfileUrl() != null ) {
+            candidate.setProfileUrl( candidateDto.getProfileUrl() );
+        }
+        if ( candidateDto.getExperience() != null ) {
+            candidate.setExperience( candidateDto.getExperience() );
+        }
+        if ( candidateDto.getIsUnileverBefore() != null ) {
+            candidate.setIsUnileverBefore( candidateDto.getIsUnileverBefore() );
+        }
+        if ( candidateDto.getGenderId() != null ) {
+            candidate.setGenderId( candidateDto.getGenderId() );
+        }
+        if ( candidateDto.getIsSourcedByHeadHunter() != null ) {
+            candidate.setIsSourcedByHeadHunter( candidateDto.getIsSourcedByHeadHunter() );
+        }
+        if ( candidateDto.getComments() != null ) {
+            candidate.setComments( candidateDto.getComments() );
+        }
+        if ( candidateDto.getHiringStatusId() != null ) {
+            candidate.setHiringStatusId( candidateDto.getHiringStatusId() );
+        }
+        if ( candidateDto.getIsInterviewed() != null ) {
+            candidate.setIsInterviewed( candidateDto.getIsInterviewed() );
+        }
+
+        return candidate;
+    }
+
+    @Override
+    public CandidateDto convert(Candidate candidate) {
+        if ( candidate == null ) {
+            return null;
+        }
+
+        CandidateDto candidateDto = new CandidateDto();
+
+        candidateDto.setId( candidate.getId() );
+        candidateDto.setCreatedDate( candidate.getCreatedDate() );
+        candidateDto.setCreatedBy( candidate.getCreatedBy() );
+        candidateDto.setModifiedDate( candidate.getModifiedDate() );
+        candidateDto.setModifiedBy( candidate.getModifiedBy() );
+        candidateDto.setActive( candidate.getActive() );
+        candidateDto.setCandidateName( candidate.getCandidateName() );
+        candidateDto.setEmployerName( candidate.getEmployerName() );
+        candidateDto.setCurrentDesignation( candidate.getCurrentDesignation() );
+        candidateDto.setRoleId( candidate.getRoleId() );
+        candidateDto.setProfileUrl( candidate.getProfileUrl() );
+        candidateDto.setExperience( candidate.getExperience() );
+        candidateDto.setIsUnileverBefore( candidate.getIsUnileverBefore() );
+        candidateDto.setGenderId( candidate.getGenderId() );
+        candidateDto.setIsSourcedByHeadHunter( candidate.getIsSourcedByHeadHunter() );
+        candidateDto.setComments( candidate.getComments() );
+        candidateDto.setHiringStatusId( candidate.getHiringStatusId() );
+        candidateDto.setIsInterviewed( candidate.getIsInterviewed() );
+
+        return candidateDto;
     }
 }

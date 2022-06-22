@@ -4,8 +4,10 @@ import com.unilever.commonservice.profile.model.Role;
 import com.unilever.utilityservice.dto.DefaultLabelValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 

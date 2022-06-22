@@ -1,7 +1,9 @@
 package com.unilever.commonservice.profile.mapper;
 
+import com.unilever.commonservice.profile.dto.CandidateDto;
 import com.unilever.commonservice.profile.dto.ProfileDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
+import com.unilever.commonservice.profile.model.Candidate;
 import com.unilever.commonservice.profile.model.Profile;
 import com.unilever.commonservice.profile.model.Role;
 import com.unilever.utilityservice.mapper.BaseMapper;
@@ -18,4 +20,10 @@ public interface CommonMapper {
     Role convert(RoleDto roleDto,@MappingTarget Role role);
 
     RoleDto convert(Role role);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    Candidate convert(CandidateDto candidateDto,@MappingTarget Candidate candidate);
+
+    CandidateDto convert(Candidate candidate);
 }
