@@ -4,6 +4,7 @@ import com.unilever.utilityservice.model.AbstractEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.With;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;

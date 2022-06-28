@@ -5,15 +5,15 @@ import com.unilever.commonservice.profile.constants.RoleType;
 import com.unilever.commonservice.profile.constants.converter.RoleTypeConverter;
 import com.unilever.commonservice.profile.constants.converter.RoleTypeSerializer;
 import com.unilever.utilityservice.model.AbstractEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@With
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "COMMON_PROFILE")
 @AttributeOverride(name = "id", column = @Column(name = "COMMON_PROFILE_ID"))

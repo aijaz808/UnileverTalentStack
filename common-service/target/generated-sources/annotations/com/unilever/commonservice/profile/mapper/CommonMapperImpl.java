@@ -1,9 +1,11 @@
 package com.unilever.commonservice.profile.mapper;
 
 import com.unilever.commonservice.profile.dto.CandidateDto;
+import com.unilever.commonservice.profile.dto.CandidateEvaluationDto;
 import com.unilever.commonservice.profile.dto.ProfileDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
 import com.unilever.commonservice.profile.model.Candidate;
+import com.unilever.commonservice.profile.model.CandidateEvaluation;
 import com.unilever.commonservice.profile.model.Profile;
 import com.unilever.commonservice.profile.model.Role;
 import javax.annotation.processing.Generated;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-23T02:20:05+0500",
+    date = "2022-06-29T01:59:26+0500",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -92,6 +94,9 @@ public class CommonMapperImpl implements CommonMapper {
         if ( roleDto.getLineManager() != null ) {
             role.setLineManager( roleDto.getLineManager() );
         }
+        if ( roleDto.getUserName() != null ) {
+            role.setUserName( roleDto.getUserName() );
+        }
 
         return role;
     }
@@ -102,7 +107,17 @@ public class CommonMapperImpl implements CommonMapper {
             return null;
         }
 
-        RoleDto roleDto = new RoleDto();
+        String roleName = null;
+        String grade = null;
+        String lineManager = null;
+        String userName = null;
+
+        roleName = role.getRoleName();
+        grade = role.getGrade();
+        lineManager = role.getLineManager();
+        userName = role.getUserName();
+
+        RoleDto roleDto = new RoleDto( roleName, grade, lineManager, userName );
 
         roleDto.setId( role.getId() );
         roleDto.setCreatedDate( role.getCreatedDate() );
@@ -110,9 +125,6 @@ public class CommonMapperImpl implements CommonMapper {
         roleDto.setModifiedDate( role.getModifiedDate() );
         roleDto.setModifiedBy( role.getModifiedBy() );
         roleDto.setActive( role.getActive() );
-        roleDto.setRoleName( role.getRoleName() );
-        roleDto.setGrade( role.getGrade() );
-        roleDto.setLineManager( role.getLineManager() );
 
         return roleDto;
     }
@@ -209,5 +221,103 @@ public class CommonMapperImpl implements CommonMapper {
         candidateDto.setIsInterviewed( candidate.getIsInterviewed() );
 
         return candidateDto;
+    }
+
+    @Override
+    public CandidateEvaluation convert(CandidateEvaluationDto candidateEvaluationDto, CandidateEvaluation candidate) {
+        if ( candidateEvaluationDto == null ) {
+            return null;
+        }
+
+        if ( candidateEvaluationDto.getId() != null ) {
+            candidate.setId( candidateEvaluationDto.getId() );
+        }
+        if ( candidateEvaluationDto.getCreatedDate() != null ) {
+            candidate.setCreatedDate( candidateEvaluationDto.getCreatedDate() );
+        }
+        if ( candidateEvaluationDto.getCreatedBy() != null ) {
+            candidate.setCreatedBy( candidateEvaluationDto.getCreatedBy() );
+        }
+        if ( candidateEvaluationDto.getModifiedDate() != null ) {
+            candidate.setModifiedDate( candidateEvaluationDto.getModifiedDate() );
+        }
+        if ( candidateEvaluationDto.getModifiedBy() != null ) {
+            candidate.setModifiedBy( candidateEvaluationDto.getModifiedBy() );
+        }
+        if ( candidateEvaluationDto.getActive() != null ) {
+            candidate.setActive( candidateEvaluationDto.getActive() );
+        }
+        if ( candidateEvaluationDto.getCandidateId() != null ) {
+            candidate.setCandidateId( candidateEvaluationDto.getCandidateId() );
+        }
+        if ( candidateEvaluationDto.getPersonalMasteryId() != null ) {
+            candidate.setPersonalMasteryId( candidateEvaluationDto.getPersonalMasteryId() );
+        }
+        if ( candidateEvaluationDto.getAgilityId() != null ) {
+            candidate.setAgilityId( candidateEvaluationDto.getAgilityId() );
+        }
+        if ( candidateEvaluationDto.getPassionForHighPerformanceId() != null ) {
+            candidate.setPassionForHighPerformanceId( candidateEvaluationDto.getPassionForHighPerformanceId() );
+        }
+        if ( candidateEvaluationDto.getStrongDriveId() != null ) {
+            candidate.setStrongDriveId( candidateEvaluationDto.getStrongDriveId() );
+        }
+        if ( candidateEvaluationDto.getStrategicMindsetId() != null ) {
+            candidate.setStrategicMindsetId( candidateEvaluationDto.getStrategicMindsetId() );
+        }
+        if ( candidateEvaluationDto.getTechnicalExpertiseId() != null ) {
+            candidate.setTechnicalExpertiseId( candidateEvaluationDto.getTechnicalExpertiseId() );
+        }
+        if ( candidateEvaluationDto.getDiversityOfGenderId() != null ) {
+            candidate.setDiversityOfGenderId( candidateEvaluationDto.getDiversityOfGenderId() );
+        }
+        if ( candidateEvaluationDto.getGeneralEvaluationComments() != null ) {
+            candidate.setGeneralEvaluationComments( candidateEvaluationDto.getGeneralEvaluationComments() );
+        }
+        if ( candidateEvaluationDto.getFinalDecisionId() != null ) {
+            candidate.setFinalDecisionId( candidateEvaluationDto.getFinalDecisionId() );
+        }
+        if ( candidateEvaluationDto.getIsOtherRoles() != null ) {
+            candidate.setIsOtherRoles( candidateEvaluationDto.getIsOtherRoles() );
+        }
+        if ( candidateEvaluationDto.getOtherRolesRecommended() != null ) {
+            candidate.setOtherRolesRecommended( candidateEvaluationDto.getOtherRolesRecommended() );
+        }
+        if ( candidateEvaluationDto.getReadinessTime() != null ) {
+            candidate.setReadinessTime( candidateEvaluationDto.getReadinessTime() );
+        }
+
+        return candidate;
+    }
+
+    @Override
+    public CandidateEvaluationDto convert(CandidateEvaluation candidateEvaluation) {
+        if ( candidateEvaluation == null ) {
+            return null;
+        }
+
+        CandidateEvaluationDto candidateEvaluationDto = new CandidateEvaluationDto();
+
+        candidateEvaluationDto.setId( candidateEvaluation.getId() );
+        candidateEvaluationDto.setCreatedDate( candidateEvaluation.getCreatedDate() );
+        candidateEvaluationDto.setCreatedBy( candidateEvaluation.getCreatedBy() );
+        candidateEvaluationDto.setModifiedDate( candidateEvaluation.getModifiedDate() );
+        candidateEvaluationDto.setModifiedBy( candidateEvaluation.getModifiedBy() );
+        candidateEvaluationDto.setActive( candidateEvaluation.getActive() );
+        candidateEvaluationDto.setCandidateId( candidateEvaluation.getCandidateId() );
+        candidateEvaluationDto.setPersonalMasteryId( candidateEvaluation.getPersonalMasteryId() );
+        candidateEvaluationDto.setAgilityId( candidateEvaluation.getAgilityId() );
+        candidateEvaluationDto.setPassionForHighPerformanceId( candidateEvaluation.getPassionForHighPerformanceId() );
+        candidateEvaluationDto.setStrongDriveId( candidateEvaluation.getStrongDriveId() );
+        candidateEvaluationDto.setStrategicMindsetId( candidateEvaluation.getStrategicMindsetId() );
+        candidateEvaluationDto.setTechnicalExpertiseId( candidateEvaluation.getTechnicalExpertiseId() );
+        candidateEvaluationDto.setDiversityOfGenderId( candidateEvaluation.getDiversityOfGenderId() );
+        candidateEvaluationDto.setGeneralEvaluationComments( candidateEvaluation.getGeneralEvaluationComments() );
+        candidateEvaluationDto.setFinalDecisionId( candidateEvaluation.getFinalDecisionId() );
+        candidateEvaluationDto.setIsOtherRoles( candidateEvaluation.getIsOtherRoles() );
+        candidateEvaluationDto.setOtherRolesRecommended( candidateEvaluation.getOtherRolesRecommended() );
+        candidateEvaluationDto.setReadinessTime( candidateEvaluation.getReadinessTime() );
+
+        return candidateEvaluationDto;
     }
 }

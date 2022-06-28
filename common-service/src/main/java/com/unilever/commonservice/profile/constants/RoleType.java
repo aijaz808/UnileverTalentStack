@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum RoleType {
 
-    TALENT_EXPERT( 20191),
-    EVALUATOR( 21092);
+    TALENT_SPECIALIST( 20191),
+    TALENT_EVALUATOR( 21092);
 
     private final Integer statusCode;
 

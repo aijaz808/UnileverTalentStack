@@ -27,4 +27,7 @@ public class Role extends AbstractEntity {
     @Column( name = "LINE_MANAGER")
     private String lineManager;
 
+    @Column( name = "USER_NAME")
+    private String userName;
+
 }

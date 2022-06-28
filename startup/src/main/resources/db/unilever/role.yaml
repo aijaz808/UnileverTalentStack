@@ -58,3 +58,15 @@ databaseChangeLog:
                   type: tinyint
                   constraints:
                     nullable: false
+  - changeSet:
+      id: addColumn-userName
+      author: Amna Ijaz
+      changes:
+        - addColumn:
+            tableName: ROLE_TYPE
+            columns:
+              - column:
+                  name: USER_NAME
+                  type: varchar(500)
+                  constraints:
+                    nullable: false

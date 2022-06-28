@@ -1,5 +1,6 @@
 com\unilever\utilityservice\exception\UnauthorizedException.class
 com\unilever\utilityservice\model\AbstractEntity.class
+com\unilever\utilityservice\reader\ExcelSheetReader.class
 com\unilever\utilityservice\dto\BaseDto.class
 com\unilever\utilityservice\dto\DefaultLabelValue.class
 com\unilever\utilityservice\exception\EntityAlreadyExistException.class

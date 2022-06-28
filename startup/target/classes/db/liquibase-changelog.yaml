@@ -17,3 +17,6 @@ databaseChangeLog:
   - include:
       file: "unilever/code_type.yaml"
       relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/candidate_evaluation.yaml"
+      relativeToChangelogFile: "true"

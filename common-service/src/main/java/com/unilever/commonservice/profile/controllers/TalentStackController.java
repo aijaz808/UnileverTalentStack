@@ -1,15 +1,18 @@
 package com.unilever.commonservice.profile.controllers;
 
 import com.unilever.commonservice.profile.dto.CandidateDto;
+import com.unilever.commonservice.profile.dto.CandidateEvaluationDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
+import com.unilever.commonservice.profile.model.Candidate;
 import com.unilever.commonservice.profile.service.TalentStackService;
 import com.unilever.utilityservice.response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Map;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/talentStack")
@@ -44,5 +47,34 @@ public class TalentStackController {
         return ResponseHandler.buildResponseData(talentStackService.getCandidateInformation(candidateId), HttpStatus.OK);
     }
 
+    @GetMapping("/getCandidateDashboard/{roleId}")
+    public ResponseEntity<?> getCandidateDashboard(@PathVariable Long roleId) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.getCandidateDashboard(roleId), HttpStatus.OK);
+    }
 
+    @GetMapping("/getLineManagerInformation/{userName}")
+    public ResponseEntity<?> getLineManagerInformation(@PathVariable String userName) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.getLineManagerInformation(userName), HttpStatus.OK);
+    }
+
+    @PostMapping("/import-order-excel")
+    public ResponseEntity<?> importExcelFile(@RequestParam("file") MultipartFile files)throws IOException {
+
+        return  ResponseHandler.buildResponseData(talentStackService.importExcelFile(files), HttpStatus.OK);
+    }
+
+    @PostMapping("/saveCandidateEvaluation")
+    public ResponseEntity<?> saveCandidateEvaluation(@RequestBody CandidateEvaluationDto candidateEvaluationDto) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.saveCandidateEvaluation(candidateEvaluationDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/getCandidateEvaluation/{candidateEvaluationId}")
+    public ResponseEntity<?> getCandidateEvaluation(@PathVariable Long candidateEvaluationId) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.getCandidateEvaluation(candidateEvaluationId), HttpStatus.OK);
+    }
+
+    @GetMapping("/getCounts/{roleId}")
+    public ResponseEntity<?> getCounts(@PathVariable Long roleId) throws Exception{
+        return ResponseHandler.buildResponseData(talentStackService.getCounts(roleId), HttpStatus.OK);
+    }
 }

@@ -13,4 +13,6 @@ public interface CodeRepository extends JpaRepository<Code, Long> {
 
     @Query("Select new  com.unilever.utilityservice.dto.DefaultLabelValue(c.id, c.codeValue) from Code c where c.codeTypeId = :codeTypeId and c.active= 1")
     List<DefaultLabelValue> findCodeValuesByCodeTypeId(Long codeTypeId);
+
+    Code findByCodeValue(String cellValue);
 }
