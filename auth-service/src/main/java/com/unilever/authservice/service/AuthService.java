@@ -31,6 +31,7 @@ public class AuthService {
 
             throw new UnauthorizedException();
         }
+        profile.setModifiedBy(profile.getUserName());
         return profile;
     }
 

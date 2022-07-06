@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: changeset_create_role_type
+      author: Amna Ijaz
+      changes:
+        - createTable:
+            tableName: ROLE_TYPE
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ROLE_NAME
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: GRADE
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LINE_MANAGER
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATE_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LOCK_VERSION
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ACTIVE_IND
+                  type: tinyint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: addColumn-userName
+      author: Amna Ijaz
+      changes:
+        - addColumn:
+            tableName: ROLE_TYPE
+            columns:
+              - column:
+                  name: USER_NAME
+                  type: varchar(500)
+                  constraints:
+                    nullable: false

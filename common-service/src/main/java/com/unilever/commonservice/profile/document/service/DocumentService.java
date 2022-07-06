@@ -17,7 +17,7 @@ import java.util.List;
 @Log4j2
 public class DocumentService {
 
-    private static final String DOCUMENT_PATH="../upload_documents";
+    private static final String DOCUMENT_PATH="/opt/tomcat/webapps/upload_documents";
     public Boolean uploadDocument(DocumentDto documentDto) throws Exception {
 
         String fileDir = DOCUMENT_PATH + "/" + documentDto.getProcessAcronym() ;

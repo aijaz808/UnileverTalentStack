@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - include:
+      file: "unilever/refresh_token.yaml"
+      relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/profile.yaml"
+      relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/role.yaml"
+      relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/candidates.yaml"
+      relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/code.yaml"
+      relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/code_type.yaml"
+      relativeToChangelogFile: "true"
+  - include:
+      file: "unilever/candidate_evaluation.yaml"
+      relativeToChangelogFile: "true"

@@ -11,6 +11,7 @@ import javax.persistence.Column;
 public class CandidateEvaluationDto extends BaseDto {
 
     private Long candidateId;
+    private Long roleId;
     private Long personalMasteryId;
     private Long agilityId;
     private Long passionForHighPerformanceId;

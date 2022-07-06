@@ -55,11 +55,11 @@ public class AbstractEntity implements Serializable {
     public Integer lockVersion = 1;
 
 
-    @PreUpdate
+   /* @PreUpdate
     protected void onUpdate() {
         modifiedDate= modifiedDate == null ? new Date():modifiedDate;
         lockVersion = lockVersion == null ? 1 : lockVersion + 1;
         active = (active == null || active.booleanValue() == true ? true : false);
         modifiedBy = modifiedBy == null ? (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal() : modifiedBy;
-    }
+    }*/
 }

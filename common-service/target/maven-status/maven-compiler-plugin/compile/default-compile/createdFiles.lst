@@ -1,4 +1,5 @@
 com\unilever\commonservice\profile\constants\converter\RoleTypeSerializer.class
+com\unilever\commonservice\profile\constants\converter\HiringStatusSerializer.class
 com\unilever\commonservice\profile\repository\CodeRepository.class
 com\unilever\commonservice\profile\repository\RoleRepository.class
 com\unilever\commonservice\profile\constants\converter\RoleTypeConverter.class
@@ -6,10 +7,12 @@ com\unilever\commonservice\profile\document\dto\DocumentDto.class
 com\unilever\commonservice\profile\constants\RoleType.class
 com\unilever\commonservice\profile\model\Candidate.class
 com\unilever\commonservice\profile\CommonServiceApplication.class
+com\unilever\commonservice\profile\constants\converter\HiringStatusConverter.class
 com\unilever\commonservice\profile\DataSourceConfig.class
 com\unilever\commonservice\profile\dto\CandidateEvaluationDto.class
 com\unilever\commonservice\profile\service\TalentStackService.class
 com\unilever\commonservice\profile\service\ProfileService.class
+com\unilever\commonservice\profile\constants\HiringStatus.class
 com\unilever\commonservice\profile\mapper\CommonMapper.class
 com\unilever\commonservice\profile\repository\CandidateRepository.class
 com\unilever\commonservice\profile\document\controller\DocumentController.class

@@ -18,9 +18,15 @@ public class JpaAuditingConfiguration implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
         try {
-            return Optional.of(((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+            Object userContext = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (userContext instanceof String &&
+                    !((String) userContext).equalsIgnoreCase("anonymousUser")) {
+                return Optional.of((String) userContext);
+            } else {
+                return Optional.of("UNAUTHENTICATED-SPRING");
+            }
         } catch(Exception e) {
-            return Optional.of("UNAUTHENTICATED");
+            return Optional.of("UNAUTHENTICATED-SPRING");
         }
     }
 

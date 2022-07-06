@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: changeset_create_CANDIDATE_EVALUATION
+      author: Amna Ijaz
+      changes:
+        - createTable:
+            tableName: CANDIDATE_EVALUATION
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: CANDIDATE_ID
+                  type: numeric(18,0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PERSONAL_MASTERY
+                  type: numeric(18,0)
+              - column:
+                  name: AGILITY
+                  type: numeric(18,0)
+              - column:
+                  name: PASSION_FOR_HIGH_PERFORMANCE
+                  type: numeric(18,0)
+              - column:
+                  name: STRONG_DRIVE
+                  type: numeric(18,0)
+              - column:
+                  name: STRATEGIC_MINDSET
+                  type: numeric(18,0)
+              - column:
+                  name: TECHNICAL_EXPERTISE
+                  type: numeric(18,0)
+              - column:
+                  name: DIVERSITY_OF_GENDER
+                  type: numeric(18,0)
+              - column:
+                  name: GENERAL_EVALUATION_COMMENTS
+                  type: VARCHAR(5000)
+              - column:
+                  name: FINAL_DECISION
+                  type: numeric(18,0)
+              - column:
+                  name: IS_RECOMMENDED_FOR_OTHER_ROLES
+                  type: BIT
+              - column:
+                  name: OTHER_ROLES_RECOMMENDED
+                  type: VARCHAR(5000)
+              - column:
+                  name: READINESS_TIME
+                  type: numeric(18,0)
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATE_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LOCK_VERSION
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ACTIVE_IND
+                  type: tinyint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: addColumn-Role
+      author: Amna Ijaz
+      changes:
+        - addColumn:
+            tableName: CANDIDATE_EVALUATION
+            columns:
+              - column:
+                  name: ROLE
+                  type: numeric(18,0)
+                  constraints:
+                    nullable: false

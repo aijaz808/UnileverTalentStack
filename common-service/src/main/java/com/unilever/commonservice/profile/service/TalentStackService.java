@@ -1,5 +1,6 @@
 package com.unilever.commonservice.profile.service;
 
+import com.unilever.commonservice.profile.constants.HiringStatus;
 import com.unilever.commonservice.profile.constants.RoleType;
 import com.unilever.commonservice.profile.dto.CandidateDto;
 import com.unilever.commonservice.profile.dto.CandidateEvaluationDto;
@@ -202,7 +203,7 @@ public class TalentStackService {
                 candidate.setIsSourcedByHeadHunter(getCellValue(row, 8) == "YES" ? Boolean.FALSE : Boolean.TRUE);
                 candidate.setRoleId(roleRepository.findByRoleName(getCellValue(row, 9)).getId());
                 candidate.setComments(getCellValue(row, 10));
-                candidate.setHiringStatusId(codeRepository.findByCodeValue(getCellValue(row, 11)).getId());
+                candidate.setHiringStatusId(HiringStatus.get(getCellValue(row, 11)).longValue());
                 candidate.setProfileUrl(getCellValue(row, 12));
                 candidate.setIsInterviewed(getCellValue(row, 13) == "YES" ? Boolean.FALSE : Boolean.TRUE);
                 candidate = candidateRepository.save(candidate);
@@ -262,6 +263,10 @@ public class TalentStackService {
             if (candidateDto.getDiversityOfGenderId() != null) {
                 candidateDto.setDiversityOfGender(roleRepository.findById(candidateDto.getDiversityOfGenderId()).get().getRoleName());
             }
+
+            if (candidateDto.getDiversityOfGenderId() != null) {
+                candidateDto.setDiversityOfGender(roleRepository.findById(candidateDto.getDiversityOfGenderId()).get().getRoleName());
+            }
             if (candidateDto.getFinalDecisionId() != null) {
                 candidateDto.setFinalDecision(codeRepository.findById(candidateDto.getFinalDecisionId()).get().getCodeValue());
             }
@@ -299,9 +304,17 @@ public class TalentStackService {
 
         Long candidatesInterviewed= candidate.stream().filter(c -> Boolean.TRUE.equals(c.getIsInterviewed())).count();
 
-        Long candidatesHired= candidate.stream().filter(c -> c.getHiringStatusId().equals(20014L)).count();
+        Long candidatesHired= candidate.stream().filter(c -> c.getHiringStatusId().equals(20011L)).count();
 
         Long candidatesParked= candidate.stream().filter(c -> c.getHiringStatusId().equals(20013L)).count();
+
+        List<CandidateEvaluation> candidateEvaluationList =candidateEvaluationRepository.findByRoleIdAndActive(roleId, Boolean.TRUE);
+
+        Long parkedEvaluation= candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId().equals(40011L)).count();
+
+        Long hiredEvaluation= candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId().equals(40010L)).count();
+
+        Long doNotHireEvaluation= candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId().equals(40012L)).count();
 
         Map<String, Long> counts=new HashMap<>();
         counts.put("CandidatesMapped", candidatesMapped);
@@ -309,6 +322,10 @@ public class TalentStackService {
         counts.put("CandidatesInterviewed", candidatesInterviewed);
         counts.put("CandidatesHired", candidatesHired);
         counts.put("CandidatesParked", candidatesParked);
+        counts.put("ShortlistingEvaluation", parkedEvaluation);
+        counts.put("hiredEvaluation", hiredEvaluation);
+        counts.put("doNotHireEvaluation", doNotHireEvaluation);
+
 
         return counts;
     }

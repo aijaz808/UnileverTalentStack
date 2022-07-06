@@ -77,4 +77,6 @@ public class TalentStackController {
     public ResponseEntity<?> getCounts(@PathVariable Long roleId) throws Exception{
         return ResponseHandler.buildResponseData(talentStackService.getCounts(roleId), HttpStatus.OK);
     }
+
+
 }

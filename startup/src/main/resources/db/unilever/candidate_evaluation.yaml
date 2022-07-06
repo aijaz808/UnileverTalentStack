@@ -84,3 +84,15 @@ databaseChangeLog:
                   type: tinyint
                   constraints:
                     nullable: false
+  - changeSet:
+      id: addColumn-Role
+      author: Amna Ijaz
+      changes:
+        - addColumn:
+            tableName: CANDIDATE_EVALUATION
+            columns:
+              - column:
+                  name: ROLE
+                  type: numeric(18,0)
+                  constraints:
+                    nullable: false

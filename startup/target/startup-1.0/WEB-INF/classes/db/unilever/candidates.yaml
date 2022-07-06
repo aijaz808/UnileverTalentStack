@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: changeset_create_candidates
+      author: Amna Ijaz
+      changes:
+        - createTable:
+            tableName: CANDIDATES
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: CANDIDATE_NAME
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CURRENT_EMPLOYER
+                  type: varchar(500)
+              - column:
+                  name: CURRENT_DESIGNATION
+                  type: varchar(500)
+              - column:
+                  name: ROLE_ID
+                  type: numeric(18,0)
+              - column:
+                  name: PROFILE_URL
+                  type: VARCHAR(500)
+              - column:
+                  name: EXPERIENCE
+                  type: numeric(18,0)
+              - column:
+                  name: IS_UNILEVER_BEFORE
+                  type: BIT
+              - column:
+                  name: GENDER_ID
+                  type: numeric(18,0)
+              - column:
+                  name: IS_SOURCED_BY_HEAD_HUNTER
+                  type: BIT
+              - column:
+                  name: COMMENTS
+                  type: VARCHAR(500)
+              - column:
+                  name: HIRING_STATUS_ID
+                  type: numeric(18,0)
+              - column:
+                  name: HAS_INTERVIEWED
+                  type: BIT
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATE_DATETIME
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LOCK_VERSION
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ACTIVE_IND
+                  type: tinyint
+                  constraints:
+                    nullable: false
