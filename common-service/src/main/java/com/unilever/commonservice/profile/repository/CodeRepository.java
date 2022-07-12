@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CodeRepository extends JpaRepository<Code, Long> {
 
     @Query("Select new  com.unilever.utilityservice.dto.DefaultLabelValue(c.id, c.codeValue) from Code c where c.codeTypeId = :codeTypeId and c.active= 1")

@@ -27,4 +27,5 @@ D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\common
 D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\model\Candidate.java
 D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\dto\CandidateDto.java
 D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\controllers\TalentStackController.java
+D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\export\UserExcelExporter.java
 D:\Unilever\UnileverTalentStack\common-service\src\main\java\com\unilever\commonservice\profile\model\Profile.java

@@ -195,7 +195,7 @@ public class TalentStackService {
                 Candidate candidate= new Candidate();
 
                 candidate.setCandidateName(getCellValue(row, 2));
-                candidate.setCurrentDesignation(getCellValue(row, 3));
+                candidate.setEmployerName(getCellValue(row, 3));
                 candidate.setCurrentDesignation(getCellValue(row, 4));
                 candidate.setExperience(convertStringToInt(getCellValue(row, 5)));
                 candidate.setIsUnileverBefore(getCellValue(row, 6) == "YES" ? Boolean.FALSE : Boolean.TRUE);
