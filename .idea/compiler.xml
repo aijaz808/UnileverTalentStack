@@ -27,6 +27,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="UnileverTalentStack" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="auth-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="common-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="startup" options="-parameters -Amapstruct.defaultComponentModel=spring" />
