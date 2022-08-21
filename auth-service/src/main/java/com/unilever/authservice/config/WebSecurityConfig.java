@@ -47,7 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/profile/isUserNameExist/*",
             "/profile/isEmailExist/*",
             "/profile/isUserPrincipalNameExist/*",
-            "/profile/changePassword"
+            "/profile/changePassword",
+            "/document/downloadFile"
     };
 
     @Override

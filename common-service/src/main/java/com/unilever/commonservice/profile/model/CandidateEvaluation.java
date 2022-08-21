@@ -21,7 +21,7 @@ public class CandidateEvaluation extends AbstractEntity {
     @Column( name = "CANDIDATE_ID")
     private Long candidateId;
 
-    @Column( name = "ROLE_ID")
+    @Column( name = "ROLE")
     private Long roleId;
 
     @Column( name = "PERSONAL_MASTERY")

@@ -81,3 +81,11 @@ databaseChangeLog:
                   type: tinyint
                   constraints:
                     nullable: false
+  - changeSet:
+      id: modifyDataType-changeset_create_candidates
+      author: Amna Ijaz
+      changes:
+        - modifyDataType:
+            columnName: COMMENTS
+            newDataType: VARCHAR(5000)
+            tableName: CANDIDATES

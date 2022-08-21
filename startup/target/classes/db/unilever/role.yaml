@@ -70,3 +70,11 @@ databaseChangeLog:
                   type: varchar(500)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: dropNotNullConstraint-role_type
+      author: Amna Ijaz
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: varchar(500)
+            columnName: GRADE
+            tableName: ROLE_TYPE

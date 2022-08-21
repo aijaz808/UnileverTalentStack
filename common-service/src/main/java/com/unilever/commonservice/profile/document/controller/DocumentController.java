@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/document")
@@ -29,8 +30,7 @@ public class DocumentController {
     }
 
     @GetMapping("/getFileNames/{processAcronym}/{subDirectory}")
-    public ResponseEntity<?> getFileNames(@PathVariable("processAcronym") String processAcronym,
-                                          @PathVariable("applicationId") Long applicationId, @PathVariable("subDirectory") String subDirectory) {
+    public ResponseEntity<?> getFileNames(@PathVariable("processAcronym") String processAcronym, @PathVariable("subDirectory") Long subDirectory) {
         return ResponseHandler
                 .buildResponseData(documentService.getAllFileNames(processAcronym, subDirectory), HttpStatus.OK);
     }
@@ -49,7 +49,7 @@ public class DocumentController {
     }
 
     @PostMapping("/deleteDocument")
-    public ResponseEntity<?> deleteDocument(@RequestBody DocumentDto request) {
+    public ResponseEntity<?> deleteDocument(@RequestBody DocumentDto request) throws IOException {
         return ResponseHandler
                 .buildResponseData(documentService.deleteDocument(request), HttpStatus.ACCEPTED);
     }

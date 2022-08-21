@@ -1,21 +1,18 @@
 package com.unilever.commonservice.profile.export;
 
 import com.unilever.commonservice.profile.dto.CandidateDto;
-import com.unilever.commonservice.profile.model.Candidate;
-import com.unilever.commonservice.profile.repository.CodeRepository;
-import com.unilever.commonservice.profile.repository.RoleRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -104,10 +101,16 @@ public class UserExcelExporter {
             writeHeaderLine();
             writeDataLines();
 
-            ServletOutputStream outputStream = response.getOutputStream();
-            workbook.write(outputStream);
+            FileOutputStream output = new FileOutputStream(new File(
+                    "opt/tomcat/webapps/upload-documents/Candidates/student_database_geeks_for_geeks.xlsx"));
+
+
+
+            workbook.write(output);
             workbook.close();
-            outputStream.close();
+
+
+
 
         }
 }

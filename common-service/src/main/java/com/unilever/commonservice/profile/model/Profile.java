@@ -11,8 +11,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@With
 @NoArgsConstructor
+@With
 @AllArgsConstructor
 @Entity
 @Table(name = "COMMON_PROFILE")

@@ -1,6 +1,8 @@
 package com.unilever.startup;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.io.Console;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -27,8 +30,10 @@ import java.util.Arrays;
 @EnableAsync
 public class StartApplication {
 
+
     @Value("${cors.allowedOrigins}")
     private String[] corsAllowedOrigins;
+
 
     @Value("${cors.allowedMethods}")
     private String[] corsAllowedMethods;

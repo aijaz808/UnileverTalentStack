@@ -1,10 +1,7 @@
 package com.unilever.commonservice.profile.model;
 
 import com.unilever.utilityservice.model.AbstractEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.With;
+import lombok.*;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -15,6 +12,8 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Entity
+@With
+@AllArgsConstructor
 @Table(name = "CANDIDATES")
 @AttributeOverride(name = "id", column = @Column(name = "ID"))
 public class Candidate extends AbstractEntity {

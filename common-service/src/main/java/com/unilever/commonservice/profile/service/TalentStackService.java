@@ -2,6 +2,8 @@ package com.unilever.commonservice.profile.service;
 
 import com.unilever.commonservice.profile.constants.HiringStatus;
 import com.unilever.commonservice.profile.constants.RoleType;
+import com.unilever.commonservice.profile.document.dto.DocumentDto;
+import com.unilever.commonservice.profile.document.service.DocumentService;
 import com.unilever.commonservice.profile.dto.CandidateDto;
 import com.unilever.commonservice.profile.dto.CandidateEvaluationDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
@@ -14,6 +16,7 @@ import com.unilever.commonservice.profile.repository.*;
 import com.unilever.utilityservice.constant.AppCode;
 import com.unilever.utilityservice.dto.DefaultLabelValue;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.formula.EvaluationWorkbook;
 import org.apache.poi.ss.formula.udf.UDFFinder;
@@ -22,13 +25,12 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.*;
 
 import static com.unilever.utilityservice.common.Assert.notNull;
@@ -56,6 +58,12 @@ public class TalentStackService {
 
     @Autowired
     CandidateEvaluationRepository candidateEvaluationRepository;
+
+    @Autowired
+    DocumentService documentService;
+
+    //private static final String DOCUMENT_PATH="/opt/tomcat/webapps/upload-documents/Candidate_DB";
+    private static final String DOCUMENT_PATH="D:/upload_documents";
     public RoleDto saveRole(RoleDto roleDto) {
 
         Role role;
@@ -69,9 +77,11 @@ public class TalentStackService {
 
         }
         Profile profile=new Profile();
-        profile.withUserName(roleDto.getUserName())
-                .withPassword(passwordEncoder.encode("123"))
-                .withRoleType(RoleType.TALENT_EVALUATOR);
+
+
+        profile.setUserName(roleDto.getUserName());
+        profile.setPassword(passwordEncoder.encode("123"));
+        profile.setRoleType(RoleType.TALENT_EVALUATOR);
         profileRepository.save(profile);
         role= mapper.convert(roleDto, role);
         role= roleRepository.save(role);
@@ -80,9 +90,9 @@ public class TalentStackService {
     }
 
 
-    public List<DefaultLabelValue> getRoles() {
+    public List<Role> getRoles() {
 
-        List<DefaultLabelValue> roles=roleRepository.findAllRoles();
+        List<Role> roles=roleRepository.findAll();
 
         return roles;
     }
@@ -157,9 +167,13 @@ public class TalentStackService {
 
         candidateList.stream().forEach( candidate -> {
             CandidateDto candidateDto = mapper.convert(candidate);
-            candidateDto.setHiringStatus(codeRepository.findById(candidateDto.getHiringStatusId()).get().getCodeValue());
-            candidateDto.setGender(codeRepository.findById(candidateDto.getGenderId()).get().getCodeValue());
-            candidateDto.setRole(codeRepository.findById(candidateDto.getRoleId()).get().getCodeValue());
+            if(candidateDto.getHiringStatusId() != null) {
+                candidateDto.setHiringStatus(codeRepository.findById(candidateDto.getHiringStatusId()).get().getCodeValue());
+            }
+            if( candidateDto.getGenderId()!= null) {
+                candidateDto.setGender(codeRepository.findById(candidateDto.getGenderId()).get().getCodeValue());
+            }
+
             candidateDto.setRole(roleRepository.findById(candidateDto.getRoleId()).get().getRoleName());
             candidateDtoList.add(candidateDto);
         });
@@ -178,38 +192,61 @@ public class TalentStackService {
      }
 
 
-    public List<Candidate> importExcelFile(MultipartFile files) throws IOException {
+    public List<Candidate> importExcelFile(DocumentDto documentDto) throws Exception {
 
         List<Candidate> candidateList = new ArrayList<>();
+        String path=DOCUMENT_PATH;
+        File file=new File(path);
+        if(!file.exists()){
+            file.mkdir();
+        }
+        String fileNameWithExtension = documentDto.getFileName()
+                + (documentDto.getDocumentType() != null ? ("." + documentDto.getDocumentType()) : "");
+        byte[] bytes = Base64.decodeBase64(documentDto.getBase64().getBytes());
 
-        InputStream inputStreamResource= files.getInputStream();
-        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+        documentService.writeByte(file + "/" + fileNameWithExtension, bytes);
+        File fileIn =new File(DOCUMENT_PATH+"/Book1.xlsx");
+        InputStream inputStreamResource= new FileInputStream(fileIn);
+ //       InputStream inputStream= new InputStream();
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStreamResource);
         // Read student data form excel file sheet1.
         XSSFSheet worksheet = workbook.getSheetAt(0);
         // Read student data form excel file sheet1.
-        worksheet.removeRow(worksheet.getRow(0));
+       // worksheet.removeRow(worksheet.getRow(0));
+        int i = worksheet.getPhysicalNumberOfRows();
+        for (int index = 1; index < worksheet.getPhysicalNumberOfRows(); ++index) {
 
-        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-            if (index > 0) {
                 XSSFRow row = worksheet.getRow(index);
-                Candidate candidate= new Candidate();
+                candidateRepository.save(new Candidate()
+                        .withCandidateName(getCellValue(row, 1))
+                        .withCurrentDesignation(getCellValue(row, 3))
+                        .withEmployerName(getCellValue(row, 2))
+                        .withIsUnileverBefore(getCellValue(row, 4) == null ? null : getCellValue(row, 4) == "YES" ? Boolean.TRUE : Boolean.FALSE)
+                        .withGenderId(getCellValue(row, 5) == null ? null : codeRepository.findByCodeValue(getCellValue(row, 5)).getId())
+                        .withIsSourcedByHeadHunter(getCellValue(row, 6) == null ? null : getCellValue(row, 6) == "YES" ? Boolean.TRUE : Boolean.FALSE)
+                        .withExperience(getCellValue(row, 7) == null ? 0L :  convertStringToInt(getCellValue(row, 7)))
+                        .withRoleId(getCellValue(row, 8)==null ? null : roleRepository.findByRoleName(getCellValue(row, 8)).getId())
+                        .withComments(getCellValue(row, 9))
+                        .withHiringStatusId(getCellValue(row, 10) == null ? null : codeRepository.findByCodeValue(getCellValue(row, 10)).getId())
+                        .withProfileUrl(getCellValue(row, 11))
+                        .withIsInterviewed(getCellValue(row, 12)  == null ? null : getCellValue(row, 12) == "YES" ? Boolean.TRUE : Boolean.FALSE));
 
-                candidate.setCandidateName(getCellValue(row, 2));
-                candidate.setEmployerName(getCellValue(row, 3));
-                candidate.setCurrentDesignation(getCellValue(row, 4));
-                candidate.setExperience(convertStringToInt(getCellValue(row, 5)));
-                candidate.setIsUnileverBefore(getCellValue(row, 6) == "YES" ? Boolean.FALSE : Boolean.TRUE);
-                candidate.setGenderId(codeRepository.findByCodeValue(getCellValue(row, 7)).getId());
-                candidate.setIsSourcedByHeadHunter(getCellValue(row, 8) == "YES" ? Boolean.FALSE : Boolean.TRUE);
-                candidate.setRoleId(roleRepository.findByRoleName(getCellValue(row, 9)).getId());
-                candidate.setComments(getCellValue(row, 10));
-                candidate.setHiringStatusId(HiringStatus.get(getCellValue(row, 11)).longValue());
-                candidate.setProfileUrl(getCellValue(row, 12));
-                candidate.setIsInterviewed(getCellValue(row, 13) == "YES" ? Boolean.FALSE : Boolean.TRUE);
-                candidate = candidateRepository.save(candidate);
+                /*candidate.setCandidateName(getCellValue(row, 1));
+                candidate.setEmployerName(getCellValue(row, 2));
+                candidate.setCurrentDesignation(getCellValue(row, 3));
+                candidate.setExperience(getCellValue(row, 4) == null ? 0L :  convertStringToInt(getCellValue(row, 4)));
+                candidate.setIsUnileverBefore( getCellValue(row, 5) == null ? null : getCellValue(row, 5) == "YES" ? Boolean.TRUE : Boolean.FALSE);
+                candidate.setGenderId( getCellValue(row, 6) == null ? null : codeRepository.findByCodeValue(getCellValue(row, 6)).getId());
+                candidate.setIsSourcedByHeadHunter( getCellValue(row, 7) == null ? null : getCellValue(row, 7) == "YES" ? Boolean.TRUE : Boolean.FALSE);
+                candidate.setRoleId( getCellValue(row, 8)==null ? null : roleRepository.findByRoleName(getCellValue(row, 8)).getId());
+                candidate.setComments(getCellValue(row, 9));
+                candidate.setHiringStatusId( getCellValue(row, 10) == null ? null : codeRepository.findByCodeValue(getCellValue(row, 10)).getId());
+                candidate.setProfileUrl(getCellValue(row, 11));
+                candidate.setIsInterviewed(getCellValue(row, 12)  == null ? null : getCellValue(row, 12) == "YES" ? Boolean.TRUE : Boolean.FALSE);
+                candidate = candidateRepository.save(candidate);*/
 
-                candidateList.add(candidate);
-            }
+          //      candidateList.add(candidate);
+
         }
 
         return candidateList;
@@ -253,19 +290,19 @@ public class TalentStackService {
 
         notNull(candidateEvaluationId,"Candidate Evaluation Id cannot be null");
 
-        Optional<CandidateEvaluation> candidate=candidateEvaluationRepository.findById(candidateEvaluationId);
+        CandidateEvaluation candidate=candidateEvaluationRepository.findByCandidateId(candidateEvaluationId);
         CandidateEvaluationDto candidateDto=new CandidateEvaluationDto();
         if(!candidateEvaluationId.equals(0L) && candidate != null) {
-             candidateDto = mapper.convert(candidate.get());
+             candidateDto = mapper.convert(candidate);
             if (candidateDto.getAgilityId() != null) {
                 candidateDto.setAgility(codeRepository.findById(candidateDto.getAgilityId()).get().getCodeValue());
             }
             if (candidateDto.getDiversityOfGenderId() != null) {
-                candidateDto.setDiversityOfGender(roleRepository.findById(candidateDto.getDiversityOfGenderId()).get().getRoleName());
+                candidateDto.setDiversityOfGender(codeRepository.findById(candidateDto.getDiversityOfGenderId()).get().getCodeValue());
             }
 
             if (candidateDto.getDiversityOfGenderId() != null) {
-                candidateDto.setDiversityOfGender(roleRepository.findById(candidateDto.getDiversityOfGenderId()).get().getRoleName());
+                candidateDto.setDiversityOfGender(codeRepository.findById(candidateDto.getDiversityOfGenderId()).get().getCodeValue());
             }
             if (candidateDto.getFinalDecisionId() != null) {
                 candidateDto.setFinalDecision(codeRepository.findById(candidateDto.getFinalDecisionId()).get().getCodeValue());
@@ -274,7 +311,7 @@ public class TalentStackService {
                 candidateDto.setPassionForHighPerformance(codeRepository.findById(candidateDto.getPassionForHighPerformanceId()).get().getCodeValue());
             }
             if (candidateDto.getPersonalMasteryId() != null) {
-                candidateDto.setPersonalMastery(roleRepository.findById(candidateDto.getPersonalMasteryId()).get().getRoleName());
+                candidateDto.setPersonalMastery(codeRepository.findById(candidateDto.getPersonalMasteryId()).get().getCodeValue());
             }
             if (candidateDto.getStrategicMindsetId() != null) {
                 candidateDto.setStrategicMindset(codeRepository.findById(candidateDto.getStrategicMindsetId()).get().getCodeValue());
@@ -283,7 +320,7 @@ public class TalentStackService {
                 candidateDto.setStrongDrive(codeRepository.findById(candidateDto.getStrongDriveId()).get().getCodeValue());
             }
             if (candidateDto.getTechnicalExpertiseId() != null) {
-                candidateDto.setTechnicalExpertise(roleRepository.findById(candidateDto.getTechnicalExpertiseId()).get().getRoleName());
+                candidateDto.setTechnicalExpertise(codeRepository.findById(candidateDto.getTechnicalExpertiseId()).get().getCodeValue());
             }
         }
 
@@ -296,37 +333,39 @@ public class TalentStackService {
 
         notNull(roleId, "RoleId cannot be null");
         List<Candidate> candidate=candidateRepository.findByRoleIdAndActive(roleId, Boolean.TRUE);
+        Map<String, Long> counts=null ;
+        if( candidate != null && !candidate.isEmpty()) {
+            Long candidatesMapped = candidate.stream().filter(c ->c.getHiringStatusId()!= null && (
+                    Boolean.FALSE.equals(c.getIsInterviewed()) || c.getHiringStatusId().equals(20010L)
+                    || c.getHiringStatusId().equals(20015L))).count();
 
-        Long candidatesMapped= candidate.stream().filter(c -> Boolean.FALSE.equals(c.getIsInterviewed()) || c.getHiringStatusId().equals(20010L)
-                || c.getHiringStatusId().equals(20015L)).count();
+            Long declined = candidate.stream().filter( c -> c.getHiringStatusId()!= null && c.getHiringStatusId().equals(20012L)).count();
 
-        Long declined= candidate.stream().filter(c -> c.getHiringStatusId().equals(20012L)).count();
+            Long candidatesInterviewed = candidate.stream().filter(c ->c.getIsInterviewed()!= null && Boolean.TRUE.equals(c.getIsInterviewed())).count();
 
-        Long candidatesInterviewed= candidate.stream().filter(c -> Boolean.TRUE.equals(c.getIsInterviewed())).count();
+            Long candidatesHired = candidate.stream().filter(c ->c.getHiringStatusId()!= null && c.getHiringStatusId().equals(20011L)).count();
 
-        Long candidatesHired= candidate.stream().filter(c -> c.getHiringStatusId().equals(20011L)).count();
+            Long candidatesParked = candidate.stream().filter(c -> c.getHiringStatusId()!= null && c.getHiringStatusId().equals(20013L)).count();
 
-        Long candidatesParked= candidate.stream().filter(c -> c.getHiringStatusId().equals(20013L)).count();
+            List<CandidateEvaluation> candidateEvaluationList = candidateEvaluationRepository.findByRoleIdAndActive(roleId, Boolean.TRUE);
 
-        List<CandidateEvaluation> candidateEvaluationList =candidateEvaluationRepository.findByRoleIdAndActive(roleId, Boolean.TRUE);
+            Long parkedEvaluation = candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId() != null && ce.getFinalDecisionId().equals(40011L)).count();
 
-        Long parkedEvaluation= candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId().equals(40011L)).count();
+            Long hiredEvaluation = candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId() != null && ce.getFinalDecisionId().equals(40010L)).count();
 
-        Long hiredEvaluation= candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId().equals(40010L)).count();
+            Long doNotHireEvaluation = candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId() != null && ce.getFinalDecisionId().equals(40012L)).count();
 
-        Long doNotHireEvaluation= candidateEvaluationList.stream().filter(ce -> ce.getFinalDecisionId().equals(40012L)).count();
+            counts = new HashMap<>();
+            counts.put("CandidatesMapped", candidatesMapped);
+            counts.put("CandidatesDeclined", declined);
+            counts.put("CandidatesInterviewed", candidatesInterviewed);
+            counts.put("CandidatesHired", candidatesHired);
+            counts.put("CandidatesParked", candidatesParked);
+            counts.put("ShortlistingEvaluation", parkedEvaluation);
+            counts.put("hiredEvaluation", hiredEvaluation);
+            counts.put("doNotHireEvaluation", doNotHireEvaluation);
 
-        Map<String, Long> counts=new HashMap<>();
-        counts.put("CandidatesMapped", candidatesMapped);
-        counts.put("CandidatesDeclined", declined);
-        counts.put("CandidatesInterviewed", candidatesInterviewed);
-        counts.put("CandidatesHired", candidatesHired);
-        counts.put("CandidatesParked", candidatesParked);
-        counts.put("ShortlistingEvaluation", parkedEvaluation);
-        counts.put("hiredEvaluation", hiredEvaluation);
-        counts.put("doNotHireEvaluation", doNotHireEvaluation);
-
-
+        }
         return counts;
     }
 }

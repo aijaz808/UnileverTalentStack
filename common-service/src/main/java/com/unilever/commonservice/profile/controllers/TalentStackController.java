@@ -1,5 +1,6 @@
 package com.unilever.commonservice.profile.controllers;
 
+import com.unilever.commonservice.profile.document.dto.DocumentDto;
 import com.unilever.commonservice.profile.dto.CandidateDto;
 import com.unilever.commonservice.profile.dto.CandidateEvaluationDto;
 import com.unilever.commonservice.profile.dto.RoleDto;
@@ -12,12 +13,18 @@ import com.unilever.commonservice.profile.repository.RoleRepository;
 import com.unilever.commonservice.profile.service.TalentStackService;
 import com.unilever.utilityservice.response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -80,10 +87,10 @@ public class TalentStackController {
         return ResponseHandler.buildResponseData(talentStackService.getLineManagerInformation(userName), HttpStatus.OK);
     }
 
-    @PostMapping("/import-order-excel")
-    public ResponseEntity<?> importExcelFile(@RequestParam("file") MultipartFile files)throws IOException {
+    @PostMapping(value="/import-order-excel" )
+    public ResponseEntity<?> importExcelFile(@RequestBody DocumentDto documentDto) throws Exception {
 
-        return  ResponseHandler.buildResponseData(talentStackService.importExcelFile(files), HttpStatus.OK);
+        return  ResponseHandler.buildResponseData(talentStackService.importExcelFile(documentDto), HttpStatus.OK);
     }
 
     @PostMapping("/saveCandidateEvaluation")
@@ -103,14 +110,14 @@ public class TalentStackController {
 
 
     @GetMapping("/exportExcel/{roleId}")
-    public void exportToExcel(HttpServletResponse response, @PathVariable Long roleId) throws IOException {
-        response.setContentType("application/octet-stream");
+    public ResponseEntity<?>  exportToExcel(HttpServletResponse response, @PathVariable Long roleId) throws IOException {
+      /*  response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".xls";
+        response.setHeader(headerKey, headerValue);*/
 
         List<Candidate> listCandidates = candidateRepository.findByRoleIdAndActive(roleId, Boolean.TRUE);
         List<CandidateDto> candidateDtoList= new ArrayList<>();
@@ -125,5 +132,11 @@ public class TalentStackController {
         UserExcelExporter excelExporter = new UserExcelExporter(candidateDtoList);
 
         excelExporter.export(response);
+        File file = new File("opt/tomcat/webapps/upload-documents/Candidates/student_database_geeks_for_geeks.xlsx");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename= Candidates.xlsx" + "\"")
+                .contentLength(file.length()).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+
     }
 }
