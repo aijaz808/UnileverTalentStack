@@ -41,6 +41,8 @@ public class StartApplication {
     @Value("${cors.allowedHeaders}")
     private String[] corsAllowedHeaders;
 
+    @Value("${cors.exposedHeaders}")
+    private String[] corsExposedHeaders;
     public static void main(String[] args) {
         SpringApplication.run(StartApplication.class, args);
     }
@@ -52,6 +54,7 @@ public class StartApplication {
         configuration.setAllowedOrigins(Arrays.asList(corsAllowedOrigins));
         configuration.setAllowedMethods(Arrays.asList(corsAllowedMethods));
         configuration.setAllowedHeaders(Arrays.asList(corsAllowedHeaders));
+        configuration.setExposedHeaders(Arrays.asList(corsExposedHeaders));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

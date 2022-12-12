@@ -31,5 +31,5 @@ public class CandidateEvaluationDto extends BaseDto {
     private Boolean isOtherRoles;
     private String finalDecision;
     private String otherRolesRecommended;
-    private Long readinessTime;
+    private String readinessTime;
 }

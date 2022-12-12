@@ -34,7 +34,7 @@ public class Candidate extends AbstractEntity {
     private String profileUrl;
 
     @Column( name = "EXPERIENCE")
-    private Long experience;
+    private Double experience=0.0;
 
     @Column( name = "IS_UNILEVER_BEFORE")
     private Boolean isUnileverBefore;

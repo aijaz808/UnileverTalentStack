@@ -62,8 +62,8 @@ public class TalentStackService {
     @Autowired
     DocumentService documentService;
 
-    //private static final String DOCUMENT_PATH="/opt/tomcat/webapps/upload-documents/Candidate_DB";
-    private static final String DOCUMENT_PATH="D:/upload_documents";
+    private static final String DOCUMENT_PATH="/opt/tomcat/webapps/upload-documents/Candidate_DB";
+    //private static final String DOCUMENT_PATH="D:/upload_documents";
     public RoleDto saveRole(RoleDto roleDto) {
 
         Role role;
@@ -205,7 +205,7 @@ public class TalentStackService {
         byte[] bytes = Base64.decodeBase64(documentDto.getBase64().getBytes());
 
         documentService.writeByte(file + "/" + fileNameWithExtension, bytes);
-        File fileIn =new File(DOCUMENT_PATH+"/Book1.xlsx");
+        File fileIn =new File(DOCUMENT_PATH+"/Book.xlsx");
         InputStream inputStreamResource= new FileInputStream(fileIn);
  //       InputStream inputStream= new InputStream();
         XSSFWorkbook workbook = new XSSFWorkbook(inputStreamResource);
@@ -214,22 +214,22 @@ public class TalentStackService {
         // Read student data form excel file sheet1.
        // worksheet.removeRow(worksheet.getRow(0));
         int i = worksheet.getPhysicalNumberOfRows();
-        for (int index = 1; index < worksheet.getPhysicalNumberOfRows(); ++index) {
+        for (int index = 1; index < worksheet.getPhysicalNumberOfRows(); index++) {
 
                 XSSFRow row = worksheet.getRow(index);
                 candidateRepository.save(new Candidate()
                         .withCandidateName(getCellValue(row, 1))
-                        .withCurrentDesignation(getCellValue(row, 3))
-                        .withEmployerName(getCellValue(row, 2))
-                        .withIsUnileverBefore(getCellValue(row, 4) == null ? null : getCellValue(row, 4) == "YES" ? Boolean.TRUE : Boolean.FALSE)
+                        .withCurrentDesignation(getCellValue(row, 2))
+                        .withEmployerName(getCellValue(row, 3))
+                        .withIsUnileverBefore(getCellValue(row, 4) == null ? null : getCellValue(row, 4).equals("YES") ? Boolean.TRUE : Boolean.FALSE)
                         .withGenderId(getCellValue(row, 5) == null ? null : codeRepository.findByCodeValue(getCellValue(row, 5)).getId())
-                        .withIsSourcedByHeadHunter(getCellValue(row, 6) == null ? null : getCellValue(row, 6) == "YES" ? Boolean.TRUE : Boolean.FALSE)
-                        .withExperience(getCellValue(row, 7) == null ? 0L :  convertStringToInt(getCellValue(row, 7)))
+                        .withIsSourcedByHeadHunter(getCellValue(row, 6) == null ? null : getCellValue(row, 6).equals("YES")? Boolean.TRUE : Boolean.FALSE)
+                        .withExperience(getCellValue(row, 7) == null ? 0L :  convertStringToDouble(getCellValue(row, 7)))
                         .withRoleId(getCellValue(row, 8)==null ? null : roleRepository.findByRoleName(getCellValue(row, 8)).getId())
                         .withComments(getCellValue(row, 9))
                         .withHiringStatusId(getCellValue(row, 10) == null ? null : codeRepository.findByCodeValue(getCellValue(row, 10)).getId())
                         .withProfileUrl(getCellValue(row, 11))
-                        .withIsInterviewed(getCellValue(row, 12)  == null ? null : getCellValue(row, 12) == "YES" ? Boolean.TRUE : Boolean.FALSE));
+                        .withIsInterviewed(getCellValue(row, 12)  == null ? null : getCellValue(row, 12).equals("YES")  ? Boolean.TRUE : Boolean.FALSE));
 
                 /*candidate.setCandidateName(getCellValue(row, 1));
                 candidate.setEmployerName(getCellValue(row, 2));
@@ -258,6 +258,14 @@ public class TalentStackService {
             return result;
         }
         result = Long.parseLong(str);
+        return result;
+    }
+    private Double convertStringToDouble(String str) {
+        Double result = 0.0;
+        if (str == null || str.isEmpty() || str.trim().isEmpty()) {
+            return result;
+        }
+        result = Double.parseDouble(str);
         return result;
     }
     private String getCellValue(Row row, int cellNo) {
@@ -335,9 +343,7 @@ public class TalentStackService {
         List<Candidate> candidate=candidateRepository.findByRoleIdAndActive(roleId, Boolean.TRUE);
         Map<String, Long> counts=null ;
         if( candidate != null && !candidate.isEmpty()) {
-            Long candidatesMapped = candidate.stream().filter(c ->c.getHiringStatusId()!= null && (
-                    Boolean.FALSE.equals(c.getIsInterviewed()) || c.getHiringStatusId().equals(20010L)
-                    || c.getHiringStatusId().equals(20015L))).count();
+            Long candidatesMapped = candidate.stream().count();
 
             Long declined = candidate.stream().filter( c -> c.getHiringStatusId()!= null && c.getHiringStatusId().equals(20012L)).count();
 

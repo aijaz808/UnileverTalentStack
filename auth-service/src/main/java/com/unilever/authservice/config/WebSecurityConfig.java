@@ -48,7 +48,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/profile/isEmailExist/*",
             "/profile/isUserPrincipalNameExist/*",
             "/profile/changePassword",
-            "/document/downloadFile"
+            "/document/downloadFile",
+         //   "/talentStack/getRoles",
+            "/talentStack/saveRole",
+            "/talentStack/getTalentStackDropdowns",
+            "/talentStack/saveCandidateInformation",
+            "/talentStack/getCandidateInformation/*",
+            "/talentStack/getCandidateDashboard/*",
+            "/talentStack/getLineManagerInformation/*",
+            "/talentStack/import-order-excel",
+            "/talentStack/saveCandidateEvaluation",
+            "/talentStack/getCandidateEvaluation/*",
+            "/talentStack/getCounts/*",
+            "/talentStack/exportExcel/*",
+            "/document/uploadDocument",
+            "/document/getFileNames/*/*",
+            "/document/deleteDocument"
+
     };
 
     @Override

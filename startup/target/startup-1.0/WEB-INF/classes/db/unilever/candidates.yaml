@@ -89,3 +89,19 @@ databaseChangeLog:
             columnName: COMMENTS
             newDataType: VARCHAR(5000)
             tableName: CANDIDATES
+  - changeSet:
+      id: modifyDataType-changeset_create_candidates_EXPERIENCE
+      author: Amna Ijaz
+      changes:
+        - modifyDataType:
+            columnName: EXPERIENCE
+            newDataType: DECIMAL
+            tableName: CANDIDATES
+  - changeSet:
+      id: modifyDataType-changeset_create_candidates_EXPERIENCE_2
+      author: Amna Ijaz
+      changes:
+        - modifyDataType:
+            columnName: EXPERIENCE
+            newDataType: DECIMAL(10,2)
+            tableName: CANDIDATES

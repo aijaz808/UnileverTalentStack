@@ -58,5 +58,5 @@ public class CandidateEvaluation extends AbstractEntity {
     private String otherRolesRecommended;
 
     @Column( name = "READINESS_TIME")
-    private Long readinessTime;
+    private String readinessTime;
 }

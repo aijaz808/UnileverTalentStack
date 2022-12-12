@@ -23,7 +23,7 @@ public class CandidateDto extends BaseDto {
 
     private String profileUrl;
 
-    private Long experience;
+    private Double experience;
 
     private Boolean isUnileverBefore;
 

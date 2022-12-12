@@ -96,3 +96,11 @@ databaseChangeLog:
                   type: numeric(18,0)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: modifyDataType-changeset_create_candidates_READINESS_TIME
+      author: Amna Ijaz
+      changes:
+        - modifyDataType:
+            columnName: READINESS_TIME
+            newDataType: VARCHAR(5000)
+            tableName: CANDIDATE_EVALUATION
